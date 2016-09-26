@@ -1,0 +1,100 @@
+Microsoft (R) Macro Assembler Version 14.00.23918.0	    09/27/16 01:32:41
+src.asm							     Page 1 - 1
+
+
+				.386
+				.model flat,stdcall
+				.stack 4096
+				ExitProcess proto,dwExitCode:dword
+
+ 00000000			.data
+ 00000000 0600 0500 0400	intArray WORD 600h, 500h, 400h, 300h, 200h
+	   0300 0200
+ 0000000A = 00000005		listSize = ($ -intArray) / TYPE intArray
+ 0000000A 0000			resultNonLoop WORD 0
+ 0000000C 0000			resultLoop WORD 0
+
+ 00000000			.code
+ 00000000			main proc
+
+					;NonLoop
+ 00000000  BE 00000000			mov esi,0
+ 00000005  66| B8 0000			mov ax,0
+ 00000009  66| 03 04 75			add	ax,intArray[esi * TYPE intArray]
+	   00000000 R
+ 00000011  46				inc esi
+ 00000012  66| 03 04 75			add	ax,intArray[esi * TYPE intArray]
+	   00000000 R
+ 0000001A  46				inc esi
+ 0000001B  66| 03 04 75			add	ax,intArray[esi * TYPE intArray]
+	   00000000 R
+ 00000023  46				inc esi
+ 00000024  66| 03 04 75			add	ax,intArray[esi * TYPE intArray]
+	   00000000 R
+ 0000002C  46				inc esi
+ 0000002D  66| 03 04 75			add	ax,intArray[esi * TYPE intArray]
+	   00000000 R
+ 00000035  66| A3			mov resultNonLoop,ax	
+	   0000000A R
+
+					;LOOP
+ 0000003B  B9 00000005			mov ecx,listSize
+ 00000040  66| B8 0000			mov ax,0
+ 00000044  BE 00000000			mov esi,0
+
+ 00000049			L:
+ 00000049  66| 03 04 75			add ax, intArray[esi * TYPE intArray]
+	   00000000 R
+ 00000051  46				inc esi
+ 00000052  E2 F5			loop L
+ 00000054  66| A3			mov resultLoop,ax	
+	   0000000C R
+					invoke ExitProcess,0
+
+ 00000061			main endp
+				end main
+Microsoft (R) Macro Assembler Version 14.00.23918.0	    09/27/16 01:32:41
+src.asm							     Symbols 2 - 1
+
+
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+FLAT . . . . . . . . . . . . . .	GROUP
+STACK  . . . . . . . . . . . . .	32 Bit	 00001000 DWord	  Stack	  'STACK'	 
+_DATA  . . . . . . . . . . . . .	32 Bit	 0000000E DWord	  Public  'DATA'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 00000061 DWord	  Public  'CODE'	
+
+
+Procedures, parameters, and locals:
+
+                N a m e                 Type     Value    Attr
+
+ExitProcess  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+main . . . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 00000061 Public STDCALL
+  L  . . . . . . . . . . . . . .	L Near	 00000049 _TEXT	
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+@CodeSize  . . . . . . . . . . .	Number	 00000000h   
+@DataSize  . . . . . . . . . . .	Number	 00000000h   
+@Interface . . . . . . . . . . .	Number	 00000003h   
+@Model . . . . . . . . . . . . .	Number	 00000007h   
+@code  . . . . . . . . . . . . .	Text   	 _TEXT
+@data  . . . . . . . . . . . . .	Text   	 FLAT
+@fardata?  . . . . . . . . . . .	Text   	 FLAT
+@fardata . . . . . . . . . . . .	Text   	 FLAT
+@stack . . . . . . . . . . . . .	Text   	 FLAT
+intArray . . . . . . . . . . . .	Word	 00000000 _DATA	
+listSize . . . . . . . . . . . .	Number	 00000005h   
+resultLoop . . . . . . . . . . .	Word	 0000000C _DATA	
+resultNonLoop  . . . . . . . . .	Word	 0000000A _DATA	
+
+	   0 Warnings
+	   0 Errors

@@ -1,0 +1,79 @@
+Microsoft (R) Macro Assembler Version 14.00.23918.0	    09/27/16 01:37:43
+src.asm							     Page 1 - 1
+
+
+				.386
+				.model flat,stdcall
+				.stack 4096
+				ExitProcess proto,dwExitCode:dword
+
+ 00000000			.data
+ 00000000 50 6C 65 61 73	source BYTE 'Please copy this source string', 0
+	   65 20 63 6F 70
+	   79 20 74 68 69
+	   73 20 73 6F 75
+	   72 63 65 20 73
+	   74 72 69 6E 67
+	   00
+ 0000001F  0000001F [		dst BYTE SIZEOF source DUP(0)
+	    00
+	   ]
+
+ 00000000			.code
+ 00000000			main proc
+ 00000000  B9 0000001F			mov ecx, SIZEOF source
+ 00000005  BE 00000000			mov esi,0	
+
+ 0000000A			L:
+ 0000000A  8A 86 00000000 R		mov al, source[esi]
+ 00000010  88 86 0000001F R		mov dst[esi], al
+ 00000016  46				inc esi
+ 00000017  E2 F1			loop L
+
+					invoke ExitProcess,0
+
+ 00000020			main endp
+				end main
+Microsoft (R) Macro Assembler Version 14.00.23918.0	    09/27/16 01:37:43
+src.asm							     Symbols 2 - 1
+
+
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+FLAT . . . . . . . . . . . . . .	GROUP
+STACK  . . . . . . . . . . . . .	32 Bit	 00001000 DWord	  Stack	  'STACK'	 
+_DATA  . . . . . . . . . . . . .	32 Bit	 0000003E DWord	  Public  'DATA'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 00000020 DWord	  Public  'CODE'	
+
+
+Procedures, parameters, and locals:
+
+                N a m e                 Type     Value    Attr
+
+ExitProcess  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+main . . . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 00000020 Public STDCALL
+  L  . . . . . . . . . . . . . .	L Near	 0000000A _TEXT	
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+@CodeSize  . . . . . . . . . . .	Number	 00000000h   
+@DataSize  . . . . . . . . . . .	Number	 00000000h   
+@Interface . . . . . . . . . . .	Number	 00000003h   
+@Model . . . . . . . . . . . . .	Number	 00000007h   
+@code  . . . . . . . . . . . . .	Text   	 _TEXT
+@data  . . . . . . . . . . . . .	Text   	 FLAT
+@fardata?  . . . . . . . . . . .	Text   	 FLAT
+@fardata . . . . . . . . . . . .	Text   	 FLAT
+@stack . . . . . . . . . . . . .	Text   	 FLAT
+dst  . . . . . . . . . . . . . .	Byte	 0000001F _DATA	
+source . . . . . . . . . . . . .	Byte	 00000000 _DATA	
+
+	   0 Warnings
+	   0 Errors
